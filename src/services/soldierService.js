@@ -25,6 +25,8 @@ const diningHallValid = z.object({
 // }
 
 export async function addBenefitService(soldierId, obj) {
+  console.log(obj);
+
   const {
     unit,
     benefitType,
@@ -57,13 +59,13 @@ export async function addBenefitService(soldierId, obj) {
   };
 
   if (benefitType === "giftCard") {
-    const validGifcard = giftcardValid(details);
+    const validGifcard = giftcardValid.safeParse(details);
     if (!validGifcard.success) {
       const error = new Error("invalid giftCard details");
       error.status = 400;
     }
   } else if (benefitType === "diningHall") {
-    const validdiningHall = diningHallValid(details);
+    const validdiningHall = diningHallValid.safeParse(details);
     if (!validdiningHall.success) {
       const error = new Error("invalid diningHall details");
       error.status = 400;
@@ -104,5 +106,11 @@ export async function addBenefitService(soldierId, obj) {
     unit,
     currentBenefitType: benefitType,
     history: [period],
+    result,
   };
+}
+
+export async function getBenefits(soldierId) {
+  const result = await getRecordBySoldierId(soldierId);
+  return result;
 }
