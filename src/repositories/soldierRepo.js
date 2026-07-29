@@ -11,16 +11,22 @@ export async function createConnectionMongo() {
 }
 await createConnectionMongo();
 
-// לבדוק מה מחזיר מונגו כשאין תוצאה לחיפוש של אחד.
 export async function createRecord(welfareRecord) {
   try {
-    const checkDup = await getRecordBySoldierId(welfareRecord.soldierId);
-    if (checkDup) {
-      return null;
-    }
+    const result = await Benefit_records.insertOne(welfareRecord);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
 
-    const [result] = await Benefit_records.insertOne(welfareRecord);
-    return result.insertId;
+export async function updateRecord(soldierId, obj) {
+  try {
+    const result = await Benefit_records.findOneAndUpdate(
+      { soldierId: soldierId },
+      obj,
+    );
+    return result;
   } catch (error) {
     throw error;
   }
@@ -29,11 +35,9 @@ export async function createRecord(welfareRecord) {
 export async function getRecordBySoldierId(soldierId) {
   try {
     const id = new ObjectId(recordId);
-    const [rows] = await Benefit_records.findOne({ soldierId: soldierId });
-    return rows;
+    const result = await Benefit_records.findOne({ soldierId: soldierId });
+    return result;
   } catch (error) {
     throw error;
   }
 }
-
-export async function updateSoldier(params) {}
