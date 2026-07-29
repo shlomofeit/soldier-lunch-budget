@@ -1,0 +1,25 @@
+{
+  "name": "soldier-lunch-budget",
+  "version": "1.0.0",
+  "description": "Final exam on Node.js - server and DB &amp; testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shlomofeit/soldier-lunch-budget.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shlomofeit/soldier-lunch-budget/issues"
+  },
+  "homepage": "https://github.com/shlomofeit/soldier-lunch-budget#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.8.1",
+    "mysql2": "^3.23.2"
+  }
+}
