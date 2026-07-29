@@ -1,0 +1,48 @@
+services:
+  app:
+    build: .
+    container_name: soldier_lunch_budget
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql-db
+      - mongo-db
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    environment:
+      MONGO_URI: mongodb://root:root@mongo-db:27017/benefit_records?authSource=admin
+      MYSQL_HOST: mysql-db
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_BUDGET_DATABASE: budget_allocations
+      MYSQL_TRANSACTION_DATABASE: spend_transactions
+
+  mongo-db:
+    image: mongo:8
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - mongodata:/data/db
+
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      # MYSQL_DATABASE: 00
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+volumes:
+  mongodata:
+  mysqldata:
+  node_modules:
