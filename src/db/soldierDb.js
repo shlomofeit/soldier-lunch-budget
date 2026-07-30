@@ -1,19 +1,22 @@
-import mongoose from "mongoose";
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
 
-const Soldier = new mongoose.Schema({
-  soldierId: { type: Number, required: true },
-  unit: { type: String, required: true },
-  currentBenefitType: {
-    type: String,
-    enum: ["giftCard", "diningHall"],
-    required: true,
-  },
-  history: { type: [String], required: true },
-});
+dotenv.config();
 
-const Benefit_records = mongoose.model("Benefit_records", Soldier);
+const client = new MongoClient(process.env.MONGODB_URI);
 
-export default Benefit_records;
+export async function mongoConnection() {
+  try {
+    await client.connect();
+    const db = client.db("soldierBenefits");
+    console.log("MongoDB successfully connected...");
+    return db;
+  } catch (error) {
+    const error = new Error("connection to mongoDB atlas faild");
+    error.status = 502;
+    throw error;
+  }
+}
 
 // const BenefitPreriod = {
 //   startDate: String,
