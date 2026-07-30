@@ -1,13 +1,16 @@
 import express from "express";
 import {
   createBenefit,
-  //updateSoldier,
+  getSoldierB,
+  updateBenefit,
 } from "../controllers/soldierController.js";
 
 const router = express.Router();
 
 router.post("/:soldierId/benefits", createBenefit);
 
-// router.patch("/soldiers/:soldierId/benefits", updateSoldier);
+router.get("/:soldierId/benefits", getSoldierB);
+
+router.patch("/soldiers/:soldierId/benefits", updateBenefit);
 
 export default router;

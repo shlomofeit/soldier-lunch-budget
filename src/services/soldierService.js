@@ -11,7 +11,7 @@ const rightNow = new Date();
 let isoTime = rightNow.toISOString();
 // const time = new Date().toTimeString(); // לבדוק
 
-export default function createSoldierService(soldierRepo) {
+export default function soldierService(soldierRepo) {
   return {
     addBenefitService: async (soldierId, obj) => {
       let error;
@@ -81,6 +81,7 @@ export default function createSoldierService(soldierRepo) {
 
     updateBenefit: async (soldierId, obj) => {
       let error;
+      let schemaToCheck; //לבדוק שעכשיו תקין
       const existing = await soldierRepo.getRecordBySoldierId(soldierId);
       if (!existing) {
         error = new Error(`soldier not found`);
@@ -89,9 +90,9 @@ export default function createSoldierService(soldierRepo) {
       }
 
       if (obj.benefitType === "giftCard") {
-        const schemaToCheck = patchGiftCardBenefitValidation.safeParse(obj);
+        schemaToCheck = patchGiftCardBenefitValidation.safeParse(obj);
       } else if (obj.benefitType === "diningHall") {
-        const schemaToCheck = patchDiningHallBenefitValidation.safeParse(obj);
+        schemaToCheck = patchDiningHallBenefitValidation.safeParse(obj);
       } else {
         error = new Error("Invalid benefit type");
         error.status = 400;
