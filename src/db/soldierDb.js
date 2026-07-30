@@ -1,9 +1,11 @@
 import { MongoClient } from "mongodb";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
-const client = new MongoClient(process.env.MONGODB_URI);
+const client = new MongoClient(
+  "mongodb://shlomo:5z8EhFXnW57aiD_@ac-mdjfqmc-shard-00-00.xlk3qfb.mongodb.net:27017,ac-mdjfqmc-shard-00-01.xlk3qfb.mongodb.net:27017,ac-mdjfqmc-shard-00-02.xlk3qfb.mongodb.net:27017/?ssl=true&replicaSet=atlas-wc5twk-shard-0&authSource=admin&appName=benefitsDB",
+); //process.env.MONGODB_URI);
 
 export async function mongoConnection() {
   try {
@@ -12,29 +14,8 @@ export async function mongoConnection() {
     console.log("MongoDB successfully connected...");
     return db;
   } catch (error) {
-    const error = new Error("connection to mongoDB atlas faild");
+    error = new Error("connection to mongoDB atlas faild");
     error.status = 502;
     throw error;
   }
 }
-
-// const BenefitPreriod = {
-//   startDate: String,
-//   endDate: String,
-//   decisionReason: String,
-//   budgetApproved: Boolean,
-//   benefitType: String, //enum
-//   details: Object,
-// };
-
-// const giftcard = {
-//   cardProvider: String,
-//   monthlyValue: Number,
-//   validMerchants: String, //String[] לבדוק מה זה אומר
-// };
-
-// const diningHall = {
-//   baseId: Number || ObjectId,
-//   kosherLevel: String,
-//   mealTimes: String, //גם פה לבדוק String[]
-// };

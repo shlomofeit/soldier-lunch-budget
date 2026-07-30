@@ -2,7 +2,7 @@ import { supaConnection } from "../db/benefitDb.js";
 
 const supa = await supaConnection();
 
-export default {
+const transactionRepo = {
   create: async (obj) => {
     const { data, error } = await supa
       .from("transactions")
@@ -24,3 +24,5 @@ export default {
     return false;
   },
 };
+
+export default transactionRepo;

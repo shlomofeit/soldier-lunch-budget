@@ -3,7 +3,7 @@ import { supaConnection } from "../db/benefitDb.js";
 //con
 const supa = await supaConnection();
 
-export default {
+const repo = {
   create: async (obj) => {
     const { data, error } = await supa
       .from("allocations")
@@ -42,3 +42,5 @@ export default {
     return false;
   },
 };
+
+export default repo;
