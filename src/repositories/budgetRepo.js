@@ -1,15 +1,44 @@
-import { supa } from "../db/benefitDb.js";
+import { supaConnection } from "../db/benefitDb.js";
 
 //con
-await supa();
+const supa = await supaConnection();
 
 export default {
-  insertAllocation: async (obj) => {
-    const { data, error } = await supabase
+  create: async (obj) => {
+    const { data, error } = await supa
       .from("allocations")
       .insert(obj)
-      .select();
+      .select("*");
     if (!error) return data;
+    return false;
+  },
+  findById: async (id) => {
+    const { data, error } = await supa
+      .from("allocations")
+      .select("*")
+      .eq("id", id);
+    if (!error) {
+      return data;
+    }
+    return false;
+  },
+
+  find: async (unit = null, month = null, benefitType = null) => {
+    let result = supa.from("allocations").select("*");
+    if (unit) {
+      result = query.eq("unit", unit);
+    }
+    if (month) {
+      result = query.eq("month", month);
+    }
+    if (benefitType) {
+      result = query.eq("benefitType", benefitType);
+    }
+
+    const { data, error } = await result;
+    if (!error) {
+      return data;
+    }
     return false;
   },
 };
