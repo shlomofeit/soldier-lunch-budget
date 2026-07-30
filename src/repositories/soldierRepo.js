@@ -13,16 +13,11 @@ export default {
     const result = await collection.findOne(obj);
     return result || null;
   },
+  updateRecord: async (soldierId, obj) => {
+    const result = await collection.findOneAndUpdate({ soldierId }, obj);
+    if (result.modifiedCount > 0) {
+      return true;
+    }
+    return false;
+  },
 };
-
-export async function updateRecord(soldierId, obj) {
-  try {
-    const result = await Benefit_records.findOneAndUpdate(
-      { soldierId: soldierId },
-      obj,
-    );
-    return result;
-  } catch (error) {
-    throw error;
-  }
-}
