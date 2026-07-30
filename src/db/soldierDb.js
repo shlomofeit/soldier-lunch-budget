@@ -17,5 +17,3 @@ export async function mongoConnection() {
     throw error;
   }
 }
-
-await mongoConnection();

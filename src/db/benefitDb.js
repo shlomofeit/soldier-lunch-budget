@@ -8,7 +8,7 @@ export async function supaConnection() {
     await createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
     console.log("Connected to supabase...");
   } catch (error) {
-    const error = new Error("Connection to DB failed");
+    error = new Error("Connection to DB failed");
     throw error;
   }
 }

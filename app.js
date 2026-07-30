@@ -1,6 +1,8 @@
 import express from "express";
-import router from "./src/routes/soldiersRoute.js";
-import { success } from "zod";
+import soldiersRouter from "./src/routes/soldiersRoute.js";
+import budgetRouter from "./src/routes/budgetRoute.js";
+
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -19,10 +21,11 @@ async function errorHandller(err, req, res, next) {
 app.use(express.json());
 app.use(logger);
 
-app.use("/soldiers", router);
+app.use("/soldiers", soldiersRouter);
+app.use("/budget", budgetRouter);
 
 app.use(errorHandller);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("\n\n\n\n\nListening on port 3000...\n\n\n\n\n");
 });

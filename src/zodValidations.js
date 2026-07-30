@@ -76,3 +76,24 @@ export const patchDiningHallBenefitValidation = z.object({
   budgetApproved: z.boolean("budgetApproved must be true or false"),
   decisionDate: z.string().trim().optional(),
 });
+
+export const budgetSchema = z.object({
+  unit: z
+    .string("unit field is required")
+    .trim()
+    .min(1, "unit field is required"),
+  benefitType: z.literal(
+    ["giftCard", "diningHall"],
+    "benefitType must be giftCard or diningHall",
+  ),
+  month: z
+    .string("month field is required")
+    .trim()
+    .min(1, "month field is required"),
+  allocatedAmount: z.coerce.number("allocatedAmount must be a number"),
+});
+
+export const spendSchema = z.object({
+  amount: z.coerce.number("amount must be a number"),
+  reason: z.string().trim().optional(),
+});

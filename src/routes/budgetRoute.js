@@ -1,10 +1,12 @@
-// import express from "express";
-// import { addBudget, getBudget } from "../controllers/budgetController.js";
+import express from "express";
+import { getBudget, addBudget } from "../controllers/budgetController.js";
 
-// const router = express.Router();
+const budgetRouter = express.Router();
 
-// router.post("/budget", addBudget);
+budgetRouter.post("/", addBudget);
 
-// router.get("/budget/:id/transactions");
+budgetRouter.get("/budget/:id/transactions");
 
-// router.get("/budget", getBudget);
+budgetRouter.get("/", getBudget);
+
+export default budgetRouter;

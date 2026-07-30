@@ -44,4 +44,59 @@ describe("Soldier service test", () => {
       assert.strictEqual(result.history[0].endDate, null);
     });
   });
+
+  describe("getBenefits test", () => {
+    it("Should return null when soldier has no record", async () => {
+      const service = soldierService({
+        getRecordBySoldierId: mock.fn((id) => null),
+      });
+      const result = await service.getBenefits(1);
+      assert.strictEqual(result, null);
+    });
+
+    it("Should return the record successfully", async () => {
+      const service = soldierService({
+        getRecordBySoldierId: mock.fn((id) => ({ soldierId: 1, unit: "8200" })),
+      });
+      const result = await service.getBenefits(1);
+      assert.deepEqual(result, { soldierId: 1, unit: "8200" });
+    });
+  });
+
+  describe("updateBenefit test", () => {
+    it("Should throw an error with soldier not found", async () => {
+      const service = soldierService({
+        getRecordBySoldierId: mock.fn((id) => null),
+      });
+      await assert.rejects(async () => {
+        await service.updateBenefit(1, validGiftCard);
+      }, /not found/);
+    });
+
+    it("Should send a new period and return the updated record", async () => {
+      const existing = {
+        soldierId: "1",
+        unit: "maalotTzur",
+        currentBenefitType: "giftCard",
+        history: [
+          {
+            startDate: "",
+            endDate: null,
+            decisionReason: "n",
+            budgetApproved: true,
+            benefitType: "giftCard",
+            details: {},
+          },
+        ],
+      };
+      const service = soldierService({
+        getRecordBySoldierId: mock.fn((id) => existing),
+        updateRecord: mock.fn((id, obj) => true),
+      });
+      const result = await service.updateBenefit("1", validGiftCard);
+      assert.strictEqual(result.history.length, 2);
+      assert.notStrictEqual(result.history[0].endDate, null);
+      assert.strictEqual(result.history[1].endDate, null);
+    });
+  });
 });
