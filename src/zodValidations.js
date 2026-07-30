@@ -2,92 +2,45 @@ import { z } from "zod";
 
 export const giftCardSchema = z.object({
   unit: z
-    .string({ invalid_type_error: "Invalid input: expected string" })
+    .string("Invalid input: expected string")
     .trim()
     .min(1, "unit field is required"),
   benefitType: z.literal("giftCard"),
   decisionReason: z
-    .string({ invalid_type_error: "Invalid input: expected string" })
+    .string("Invalid input: expected string")
     .trim()
     .min(1, "decisionReason field is required"),
-  budgetApproved: z.boolean({
-    required_error: "budgetApproved field is required",
-    invalid_type_error: "budgetApproved must be true or false",
-  }),
+  budgetApproved: z.boolean("budgetApproved must be true or false"),
   startDate: z.string().trim().optional(),
   details: z.object({
     cardProvider: z
-      .string({ invalid_type_error: "Invalid input: expected string" })
+      .string("Invalid input: expected string")
       .trim()
       .min(1, "cardProvider Field is required"),
-    monthlyValue: z.number({
-      required_error: "monthlyValue field is required",
-      invalid_type_error: "Invalid input: expected number, received string",
-    }),
+    monthlyValue: z.number("Invalid input: expected number, received string"),
     validMerchants: z.array(
-      z.string({
-        invalid_type_error: "Invalid input: expected number, received string",
-      }),
-      {
-        required_error: "validMerchants array is required",
-      },
+      z.string("Invalid input: expected number, received string"),
+      "validMerchants array is required",
     ),
   }),
 });
 
 export const diningHallSchema = z.object({
   unit: z
-    .string({ invalid_type_error: "Invalid input: expected string" })
+    .string("Invalid input: expected string")
     .trim()
     .min(1, "unit field is required"),
   benefitType: z.literal("diningHall"),
   decisionReason: z
-    .string({ invalid_type_error: "Invalid input: expected string" })
+    .string("Invalid input: expected string")
     .trim()
     .min(1, "decisionReason field is required"),
-  budgetApproved: z.boolean({
-    required_error: "budgetApproved field is required",
-    invalid_type_error: "budgetApproved must be true or false",
-  }),
+  budgetApproved: z.boolean("budgetApproved must be true or false"),
   startDate: z.string().trim().optional(),
   details: z.object({
-    baseId: z.number({
-      required_error: "baseId field is required",
-      invalid_type_error: "Invalid input: expected number, received string",
-    }),
-    kosherLevel: z.string({
-      required_error: "baseId field is required",
-      invalid_type_error: "Invalid input: expected string",
-    }),
-    mealTimes: z.array(z.string(), {
-      required_error: "mealTimes array is required",
-    }),
-  }),
-});
-
-export const patchDiningHallBenefitValidation = z.object({
-  benefitType: z.literal("diningHall"),
-  details: z.object({
-    baseId: z.number({
-      required_error: "baseId field is required",
-      invalid_type_error: "Invalid input: expected number, received string",
-    }),
-    kosherLevel: z.string({
-      required_error: "baseId field is required",
-      invalid_type_error: "Invalid input: expected string",
-    }),
-    mealTimes: z.array(z.string(), {
-      required_error: "mealTimes array is required",
-    }),
-    decisionReason: z
-      .string({ invalid_type_error: "Invalid input: expected string" })
-      .trim()
-      .min(1, "decisionReason field is required"),
-    budgetApproved: z.boolean({
-      required_error: "budgetApproved field is required",
-      invalid_type_error: "budgetApproved must be true or false",
-    }),
-    decisionDay: z.string().trim().optional(),
+    baseId: z.number("baseId field is required"),
+    kosherLevel: z.string("Invalid input: expected string"),
+    mealTimes: z.array(z.string()),
   }),
 });
 
@@ -95,29 +48,31 @@ export const patchGiftCardBenefitValidation = z.object({
   benefitType: z.literal("giftCard"),
   details: z.object({
     cardProvider: z
-      .string({ invalid_type_error: "Invalid input: expected string" })
+      .string("Invalid input: expected string")
       .trim()
-      .min(1, "cardProvider Field is required"),
-    monthlyValue: z.number({
-      required_error: "monthlyValue field is required",
-      invalid_type_error: "Invalid input: expected number, received string",
-    }),
-    validMerchants: z.array(
-      z.string({
-        invalid_type_error: "Invalid input: expected number, received string",
-      }),
-      {
-        required_error: "validMerchants array is required",
-      },
-    ),
+      .min(1, "cardProvider field is required"),
+    monthlyValue: z.number("monthlyValue field is required"),
+    validMerchants: z.array(z.string()),
   }),
   decisionReason: z
-    .string({ invalid_type_error: "Invalid input: expected string" })
+    .string("Invalid input: expected string")
     .trim()
     .min(1, "decisionReason field is required"),
-  budgetApproved: z.boolean({
-    required_error: "budgetApproved field is required",
-    invalid_type_error: "budgetApproved must be true or false",
+  budgetApproved: z.boolean("budgetApproved must be true or false"),
+  decisionDate: z.string().trim().optional(),
+});
+
+export const patchDiningHallBenefitValidation = z.object({
+  benefitType: z.literal("diningHall"),
+  details: z.object({
+    baseId: z.number("baseId field is required"),
+    kosherLevel: z.string("Invalid input: expected string"),
+    mealTimes: z.array(z.string()),
   }),
-  decisionDay: z.string().trim().optional(),
+  decisionReason: z
+    .string("Invalid input: expected string")
+    .trim()
+    .min(1, "decisionReason field is required"),
+  budgetApproved: z.boolean("budgetApproved must be true or false"),
+  decisionDate: z.string().trim().optional(),
 });
