@@ -13,4 +13,14 @@ export default {
     }
     return false;
   },
+  findById: async (budgetId) => {
+    const { data, error } = await supa
+      .from("transactions")
+      .select("*")
+      .eq("budgetId", budgetId);
+    if (!error) {
+      return data;
+    }
+    return false;
+  },
 };
