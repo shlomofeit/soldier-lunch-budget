@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const giftCardSchema = z.object({
+export const giftCardSchema = z.object({
   unit: z
     .string({ invalid_type_error: "Invalid input: expected string" })
     .trim()
@@ -30,7 +30,7 @@ const giftCardSchema = z.object({
   }),
 });
 
-const diningHallSchema = z.object({
+export const diningHallSchema = z.object({
   unit: z
     .string({ invalid_type_error: "Invalid input: expected string" })
     .trim()
@@ -59,5 +59,3 @@ const diningHallSchema = z.object({
     }),
   }),
 });
-
-export default schemVaild;
