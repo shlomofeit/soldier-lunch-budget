@@ -1,17 +1,14 @@
-import mysql from "mysql2/promise";
+import { createClient } from "@supabase/supabase-js";
+import dotenv from "dotenv";
 
-export const budgetPool = mysql.createPool({
-  host: process.env.MYSQL_HOST || "mysql-db",
-  port: process.env.MYSQL_PORT || 3306,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_BUDGET_DATABASE,
-});
+dotenv.config();
 
-export const transactionPool = mysql.createPool({
-  host: process.env.MYSQL_HOST,
-  port: process.env.MYSQL_PORT || 3306,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_TRANSACTION_DATABASE,
-});
+export async function supa() {
+  try {
+    await createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+    console.log("Connected to supabase...");
+  } catch (error) {
+    const error = new Error("Connection to DB failed");
+    throw error;
+  }
+}

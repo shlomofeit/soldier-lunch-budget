@@ -1,10 +1,15 @@
-import { budgetPool, transactionPool } from "../db/benefitDb.js";
+import { supa } from "../db/benefitDb.js";
 
-export async function insertAllocation(obj) {
-  const { unit, benefitType, month, allocatedAmount } = obj;
-  const [result] = await budgetPool.execute(
-    "INSERT INTO allocations (unit, benefitType, month, allocatedAmount) VALUES (?, ?, ?, ?)",
-    [unit, benefitType, month, allocatedAmount],
-  );
-  return result.insertId;
-}
+//con
+await supa();
+
+export default {
+  insertAllocation: async (obj) => {
+    const { data, error } = await supabase
+      .from("allocations")
+      .insert(obj)
+      .select();
+    if (!error) return data;
+    return false;
+  },
+};
